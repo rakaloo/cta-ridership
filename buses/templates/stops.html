@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table class="table">
+    <th>
+        <tr>
+            <td>Stop ID</td>
+            <td>Cross streets</td>
+            <td>Total routes</td>
+            <td>Routes</td>
+            <td>Avg boardings</td>
+            <td>Avg alightings</td>
+            <td>Month</td>
+        </tr>
+    </th>
+    <tbody>
+    {% for stop in stops %}
+        <tr>
+            <td>{{ stop.id }}</td>
+            <td>{{ stop }}</td>
+            <td>{{ stop.routes_array|length }}</td>
+            <td>
+            {% for route in stop.routes_array %}
+                <a href="{% url 'route' route %}">{{ route }}</a> <br>
+            {% endfor %}
+            </td>
+            <td>{{ stop.boardings }}</td>
+            <td>{{ stop.alightings }}</td>
+            <td>{{ stop.month_beginning }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
+
+        {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">next</a>
+            <a href="?page={{ contacts.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}
