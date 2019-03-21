@@ -2,51 +2,25 @@
 
 {% block content %}
 <table class="table">
-    <th>
-        <tr>
-            <td>Stop ID</td>
-            <td>Cross streets</td>
-            <td>Total routes</td>
-            <td>Routes</td>
-            <td>Avg boardings</td>
-            <td>Avg alightings</td>
-            <td>Month</td>
-        </tr>
-    </th>
-    <tbody>
-    {% for stop in stops %}
-        <tr>
-            <td>{{ stop.id }}</td>
-            <td>{{ stop }}</td>
-            <td>{{ stop.routes_array|length }}</td>
-            <td>
-            {% for route in stop.routes_array %}
-                <a href="{% url 'route' route %}">{{ route }}</a> <br>
-            {% endfor %}
-            </td>
-            <td>{{ stop.boardings }}</td>
-            <td>{{ stop.alightings }}</td>
-            <td>{{ stop.month_beginning }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
+    <tr>
+        <th><a href="?order_by={% if current_sort == 'intersection' %}-{% endif %}intersection">Location</a></th>
+        <th><a href="?order_by={% if current_sort == 'total_routes' %}-{% endif %}total_routes">Total routes</a></th>
+        <th><a href="?order_by={% if current_sort == 'routes_array' %}-{% endif %}routes_array">Routes</a></th>
+        <th><a href="?order_by={% if current_sort == 'boardings' %}-{% endif %}boardings">Avg boardings</a></th>
+        <th><a href="?order_by={% if current_sort == 'alightings' %}-{% endif %}alightings">Avg alightings</a></th>
+    </tr>
+{% for stop in stops %}
+    <tr>
+        <td>{{ stop }}</td>
+        <td>{{ stop.total_routes }}</td>
+        <td>
+        {% for route in stop.routes_array %}
+            {{ route }} <br>
+        {% endfor %}
+        </td>
+        <td>{{ stop.boardings }}</td>
+        <td>{{ stop.alightings }}</td>
+    </tr>
+{% endfor %}
 </table>
-
-<div class="pagination">
-    <span class="step-links">
-        {% if contacts.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ contacts.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
-        </span>
-
-        {% if contacts.has_next %}
-            <a href="?page={{ contacts.next_page_number }}">next</a>
-            <a href="?page={{ contacts.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
-</div>
 {% endblock %}

@@ -1,8 +1,8 @@
 from django.urls import include, path
 
-from buses.views import StopListView, RouteDetailView
+from buses.views import StopListView, RouteListView
 
 urlpatterns = [
     path('stops/', StopListView.as_view(), name='stops'),
-    path('route/<pk>', RouteDetailView.as_view(), name='route')
+    path('routes', RouteListView.as_view(), name='routes')
 ]

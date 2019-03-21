@@ -8,9 +8,31 @@
     <body>
         <div class="page-header">
             <h1><a href="/">CTA Ridership Data</a></h1>
+            <span><a href="{% url 'stops' %}">Bus Stops</a></span>
+            <span><a href="{% url 'routes' %}">Bus Routes</a></span>
         </div>
         {% block content %}
         {% endblock %}
         </div>
+
+        {% if is_paginated %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        {% endif %}
     </body>
 </html>
