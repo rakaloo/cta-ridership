@@ -75,7 +75,14 @@ WSGI_APPLICATION = 'ctaridership.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'cta_ridership',
+        'USER': os.environ['AWS_USERNAME'],
+        'PASSWORD': os.environ['AWS_PASSWORD'],
+        'HOST': os.environ['AWS_HOST'],
+        'PORT': '5432',
+    }
 }
 
 
