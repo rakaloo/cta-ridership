@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h2>Bus Routes</h2>
+<span><a href="{% url 'stops' %}">Go to bus stops</a></span>
 <table class="table">
     <tr>
         <th><a href="?order_by={% if current_sort == 'default' %}-{% endif %}default">Route number</a></th>
-        <th><a href="?order_by={% if current_sort == 'on_streets' %}-{% endif %}on_streets">Streets traveled</a></th>
+        <th><a href="?order_by={% if current_sort == 'on_streets' %}-{% endif %}on_streets">Number of stops by street</a></th>
         <th><a href="?order_by={% if current_sort == 'total_stops' %}-{% endif %}total_stops">Total stops</a></th>
         <th><a href="?order_by={% if current_sort == 'avg_boardings' %}-{% endif %}avg_boardings">Avg stop boardings</a></th>
         <th><a href="?order_by={% if current_sort == 'avg_alightings' %}-{% endif %}avg_alightings">Avg stop alightings</a></th>
@@ -12,7 +14,11 @@
 {% for route in routes %}
     <tr>
         <td>{{ route }}<br>{{ route.int_route_id }}</td>
-        <td>{{ route.on_streets }}</td>
+        <td>
+        {% for street, stop_count in route.street_stop_list %}
+            {{ street }}: {{ stop_count}} <br>
+        {% endfor %}
+        </td>
         <td>{{ route.total_stops }}</td>
         <td>{{ route.avg_boardings|floatformat }}</td>
         <td>{{ route.avg_alightings|floatformat }}</td>

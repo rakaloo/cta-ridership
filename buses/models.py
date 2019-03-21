@@ -46,7 +46,8 @@ class RouteQuerySet(models.QuerySet):
         return self.annotate(
                 stripped_id=Cast(RegexSubstring('id', '[0-9]+'), models.IntegerField()),
                 total_stops=Count('stops'),
-                on_streets=ArrayAgg('stops__on_street', distinct=True)
+                on_streets=ArrayAgg('stops__on_street', distinct=True),
+                stop_streets=ArrayAgg('stops__on_street')
             ).annotate(
                 avg_boardings=ExpressionWrapper(
                     Sum('stops__boardings')/F('total_stops'),

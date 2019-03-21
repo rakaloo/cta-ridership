@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h2>Bus Stops</h2>
+<span><a href="{% url 'routes' %}">Go to bus routes</a></span>
 <table class="table">
     <tr>
         <th><a href="?order_by={% if current_sort == 'intersection' %}-{% endif %}intersection">Location</a></th>

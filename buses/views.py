@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 
@@ -41,4 +43,9 @@ class RouteListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['current_sort'] = self.request.GET.get('order_by', 'default')
+        for route in context['routes']:
+            street_stop_count = defaultdict(int)
+            for street in route.stop_streets:
+                street_stop_count[street] += 1
+            route.street_stop_list = sorted(list(street_stop_count.items()))
         return context
