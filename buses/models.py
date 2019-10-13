@@ -57,6 +57,11 @@ class RouteQuerySet(models.QuerySet):
                     Sum('stops__alightings')/F('total_stops'),
                     output_field=models.DecimalField()
                 )
+            ).annotate(
+                avg_traffic=ExpressionWrapper(
+                    (F('avg_alightings') + F('avg_boardings'))/2,
+                    output_field=models.DecimalField()
+                )
             )
 
 

@@ -5,6 +5,7 @@
 <span><a href="{% url 'routes' %}">Go to bus routes</a></span>
 <table class="table">
     <tr>
+        <th>Stop ID</th>
         <th><a href="?order_by={% if current_sort == 'intersection' %}-{% endif %}intersection">Location</a></th>
         <th><a href="?order_by={% if current_sort == 'total_routes' %}-{% endif %}total_routes">Total routes</a></th>
         <th><a href="?order_by={% if current_sort == 'routes_array' %}-{% endif %}routes_array">Routes</a></th>
@@ -13,6 +14,7 @@
     </tr>
 {% for stop in stops %}
     <tr>
+        <td>{{ stop.id }}</td>
         <td>{{ stop }}</td>
         <td>{{ stop.total_routes }}</td>
         <td>
